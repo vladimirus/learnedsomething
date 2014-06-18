@@ -5,3 +5,4 @@
 .DS_Store
 /learnedsomething*.log
 /*.iml
+atlassian-ide-plugin.xml
