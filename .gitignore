@@ -1,0 +1,7 @@
+/target
+/.settings
+/.idea
+/test-output
+.DS_Store
+/learnedsomething*.log
+/*.iml
