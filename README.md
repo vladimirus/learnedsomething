@@ -1,7 +1,7 @@
 learnedsomething
 ===
 
-Learned something new: reddit --> facebook plugin
+Learned Something: reddit to facebook plugin
 
 ===
 
