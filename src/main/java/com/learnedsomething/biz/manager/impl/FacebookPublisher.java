@@ -16,9 +16,9 @@ public class FacebookPublisher implements Publisher {
     @Override
     public void publish(Link link) {
         WebBrowser browser = webBrowserPool.get();
-        if (browser != null) {
-
-        }
+//        if (browser != null) {
+//
+//        }
         webBrowserPool.close(browser);
     }
 }
