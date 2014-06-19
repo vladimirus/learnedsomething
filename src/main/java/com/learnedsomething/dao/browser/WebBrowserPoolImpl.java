@@ -16,7 +16,7 @@ import java.util.Set;
  */
 @Component
 public class WebBrowserPoolImpl implements WebBrowserPool {
-    private final transient Logger log = Logger.getLogger(this.getClass());
+    private static final transient Logger LOG = Logger.getLogger(WebBrowserPoolImpl.class);
     Integer numberOfAttempts = 10;
     Long millisToSleepWhileAttempt = 10000L; //10 seconds
     Integer totalNumberOfWebBrowsers = 10;
@@ -37,7 +37,7 @@ public class WebBrowserPoolImpl implements WebBrowserPool {
             try {
                 Thread.sleep(millisToSleepWhileAttempt);
             } catch (InterruptedException e) {
-                log.error(e);
+                LOG.error(e);
             }
         }
 
@@ -52,7 +52,7 @@ public class WebBrowserPoolImpl implements WebBrowserPool {
     @Override
     @PreDestroy
     public void closeAll() {
-        log.debug("Closing all browsers...");
+        LOG.debug("Closing all browsers...");
         for (WebBrowser br : pool) {
             close(br);
         }
@@ -67,7 +67,7 @@ public class WebBrowserPoolImpl implements WebBrowserPool {
             pool.remove(browser);
             browser.close();
         } catch (Exception e) {
-            log.error("error closing", e);
+            LOG.error("error closing", e);
         }
     }
 
@@ -127,7 +127,7 @@ public class WebBrowserPoolImpl implements WebBrowserPool {
         try {
             browser = new WebBrowser(defaultWebClient);
         } catch (Exception e) {
-            log.error(e);
+            LOG.error(e);
         }
         return browser;
     }
