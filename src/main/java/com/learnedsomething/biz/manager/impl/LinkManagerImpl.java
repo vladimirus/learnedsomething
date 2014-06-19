@@ -1,12 +1,12 @@
 package com.learnedsomething.biz.manager.impl;
 
 import com.learnedsomething.biz.manager.LinkManager;
+import com.learnedsomething.biz.manager.SearchManager;
 import com.learnedsomething.biz.manager.task.ParallelTask;
 import com.learnedsomething.dao.LinkExtendedDao;
 import com.learnedsomething.model.Link;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -24,6 +24,8 @@ public class LinkManagerImpl implements LinkManager {
     @Autowired
     @Qualifier("mongoDaoImpl")
     LinkExtendedDao mongoDao;
+    @Autowired
+    SearchManager redditManager;
 
     @Override
     public List<Link> findAll() {
@@ -46,9 +48,10 @@ public class LinkManagerImpl implements LinkManager {
     }
 
     @Override
-    @Scheduled(cron = "0 */1 * * * ?")
+//    @Scheduled(cron = "0 */1 * * * ?") TODO
     public void index() {
-//        redditManager.findNewLinks();
+        List<Link> links = redditManager.findNewLinks();
+        save(links);
     }
 
     @Override
@@ -73,7 +76,7 @@ public class LinkManagerImpl implements LinkManager {
     }
 
     @Override
-    @Scheduled(cron = "0 */1 * * * ?")
+//    @Scheduled(cron = "0 */1 * * * ?") TODO
     public void broadcast() {
 //        List<Link> links = getLinksToBroadcast();
 //        for (Link link : links) {

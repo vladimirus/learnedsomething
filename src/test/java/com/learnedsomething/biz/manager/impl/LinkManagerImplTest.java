@@ -8,6 +8,7 @@ import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
+import com.learnedsomething.biz.manager.SearchManager;
 import com.learnedsomething.dao.LinkExtendedDao;
 import com.learnedsomething.model.Link;
 import org.junit.Before;
@@ -30,12 +31,15 @@ public class LinkManagerImplTest {
     private LinkExtendedDao mongoDao;
     @Mock
     private ThreadPoolTaskExecutor taskExecutor;
+    @Mock
+    private SearchManager redditManager;
 
     @Before
     public void before() {
         this.manager = new LinkManagerImpl();
         this.manager.mongoDao = mongoDao;
         this.manager.taskExecutor = taskExecutor;
+        this.manager.redditManager = redditManager;
     }
 
     @Test
@@ -139,7 +143,7 @@ public class LinkManagerImplTest {
         manager.index();
 
         // then
-//        verify(redditManager).findNewLinks(); //TODO
+        verify(redditManager).findNewLinks();
     }
 
     @Test
