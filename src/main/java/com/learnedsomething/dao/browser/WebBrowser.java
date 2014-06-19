@@ -12,8 +12,6 @@ import java.util.Date;
  * WebBrowser contains webdriver.
  */
 public class WebBrowser {
-    private final int domMaxChromeScriptRunTime = 4500;
-    private final int domMaxScriptRunTime = 3500;
     Date created = new Date();
     private WebDriver driver;
     private boolean available;
@@ -34,6 +32,8 @@ public class WebBrowser {
     }
 
     private WebDriver getFirefoxDriver() throws Exception {
+        int domMaxChromeScriptRunTime = 4500;
+        int domMaxScriptRunTime = 3500;
         DesiredCapabilities capabilities = DesiredCapabilities.firefox();
         FirefoxProfile firefoxProfile = new FirefoxProfile();
         firefoxProfile.setPreference("dom.max_chrome_script_run_time", domMaxChromeScriptRunTime);
