@@ -1,17 +1,15 @@
 package com.learnedsomething.dao.impl;
 
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+
 import com.learnedsomething.dao.LinkExtendedDao;
 import com.learnedsomething.model.Link;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
-//import static org.springframework.data.mongodb.core.query.Criteria.where;
-//import static org.springframework.data.mongodb.core.query.Criteria.query;
 
 /**
  * This class connects to mongodb to save links.
@@ -49,7 +47,7 @@ public class MongoDaoImpl implements LinkExtendedDao {
     @Override
     public List<Link> findToBroadcast() {
         Query query = new Query()
-                .with(new Sort(Sort.Direction.DESC, "up"))
+                .addCriteria(where("broadcasted").is(false))
                 .limit(50);
         return mongoOperation.find(query, Link.class);
     }

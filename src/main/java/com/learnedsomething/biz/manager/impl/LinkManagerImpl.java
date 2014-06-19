@@ -1,6 +1,7 @@
 package com.learnedsomething.biz.manager.impl;
 
 import com.learnedsomething.biz.manager.LinkManager;
+import com.learnedsomething.biz.manager.Publisher;
 import com.learnedsomething.biz.manager.SearchManager;
 import com.learnedsomething.biz.manager.task.ParallelTask;
 import com.learnedsomething.dao.LinkExtendedDao;
@@ -26,6 +27,8 @@ public class LinkManagerImpl implements LinkManager {
     LinkExtendedDao mongoDao;
     @Autowired
     SearchManager redditManager;
+    @Autowired
+    Publisher publisher;
 
     @Override
     public List<Link> findAll() {
@@ -78,10 +81,12 @@ public class LinkManagerImpl implements LinkManager {
     @Override
 //    @Scheduled(cron = "0 */1 * * * ?") TODO
     public void broadcast() {
-//        List<Link> links = getLinksToBroadcast();
-//        for (Link link : links) {
-//            mongoDao.delete(link);
-//        }
+        List<Link> links = getLinksToBroadcast();
+        for (Link link : links) {
+            link.setBroadcasted(true);
+            mongoDao.save(link);
+            publisher.publish(link);
+        }
     }
 
     @Override

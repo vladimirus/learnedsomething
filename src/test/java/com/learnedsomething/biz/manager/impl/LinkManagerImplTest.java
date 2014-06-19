@@ -6,8 +6,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import com.learnedsomething.biz.manager.Publisher;
 import com.learnedsomething.biz.manager.SearchManager;
 import com.learnedsomething.dao.LinkExtendedDao;
 import com.learnedsomething.model.Link;
@@ -33,6 +35,8 @@ public class LinkManagerImplTest {
     private ThreadPoolTaskExecutor taskExecutor;
     @Mock
     private SearchManager redditManager;
+    @Mock
+    private Publisher publisher;
 
     @Before
     public void before() {
@@ -40,6 +44,7 @@ public class LinkManagerImplTest {
         this.manager.mongoDao = mongoDao;
         this.manager.taskExecutor = taskExecutor;
         this.manager.redditManager = redditManager;
+        this.manager.publisher = publisher;
     }
 
     @Test
@@ -171,18 +176,21 @@ public class LinkManagerImplTest {
 
     @Test
     public void broadcast() {
-//        // given
-//        List<Link> links = new ArrayList<Link>();
-//        links.add(aLink());
-//        links.add(aLink());
-//        given(mongoDao.findToBroadcast()).willReturn(links);
-//
-//        // when
-//        manager.broadcast();
-//
-//        // then
-//        verify(mongoDao).findToBroadcast();
-//        verify(mongoDao, times(2)).delete(isA(Link.class));
+        // given
+        List<Link> links = new ArrayList<>();
+        links.add(aLink());
+        links.add(aLink());
+        given(mongoDao.findToBroadcast()).willReturn(links);
+
+        // when
+        manager.broadcast();
+
+        // then
+        assertEquals(links.get(0).isBroadcasted(), true);
+        assertEquals(links.get(1).isBroadcasted(), true);
+        verify(mongoDao).findToBroadcast();
+        verify(mongoDao, times(2)).save(isA(Link.class));
+        verify(publisher, times(2)).publish(isA(Link.class));
     }
 
     @Test

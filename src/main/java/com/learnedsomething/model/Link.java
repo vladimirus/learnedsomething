@@ -7,6 +7,7 @@ public class Link {
     private String id;
     private String uri;
     private String text;
+    private boolean broadcasted;
 
     public Link() {
     }
@@ -37,5 +38,13 @@ public class Link {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public boolean isBroadcasted() {
+        return broadcasted;
+    }
+
+    public void setBroadcasted(boolean broadcasted) {
+        this.broadcasted = broadcasted;
     }
 }
