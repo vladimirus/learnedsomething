@@ -5,6 +5,8 @@ Learned Something: reddit to facebook plugin
 
 ===
 
+[![Build Status](http://adapter.afterburna.com/jenkins/job/learnedsomething/badge/icon)](http://adapter.afterburna.com/jenkins/job/learnedsomething/)
+
 ### To build:
 
 Prerequisites:
