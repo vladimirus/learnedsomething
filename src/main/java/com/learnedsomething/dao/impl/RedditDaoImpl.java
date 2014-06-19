@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Repository
 public class RedditDaoImpl implements SearchDao {
-    private final transient Logger log = Logger.getLogger(this.getClass());
+    private static final transient Logger LOG = Logger.getLogger(RedditDaoImpl.class);
     @Autowired
     WebBrowserPool webBrowserPool;
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
@@ -49,7 +49,7 @@ public class RedditDaoImpl implements SearchDao {
             processLinks(searchResult, siteTable.findElements(By.className("link")));
             processPaginationUris(searchResult, siteTable.findElements(By.cssSelector("span.nextprev a")));
         } catch (Exception ignore) { // in case browser is closed while searching
-            log.error(ignore);
+            LOG.error(ignore);
         }
     }
 
@@ -62,7 +62,7 @@ public class RedditDaoImpl implements SearchDao {
                         link = processLink(rawLink);
                     }
                 } catch (Exception ignore) {
-                    log.debug("Can't parse link, ignoring...", ignore);
+                    LOG.debug("Can't parse link, ignoring...", ignore);
                 }
 
                 if (link != null && StringUtils.hasText(link.getUri())) {
@@ -103,7 +103,7 @@ public class RedditDaoImpl implements SearchDao {
             String dateStr = rawTime.getAttribute("datetime");
             date = dateFormatter.parse(dateStr);
         } catch (Exception e) {
-            log.error("Can't convert date", e);
+            LOG.error("Can't convert date", e);
             date = new Date();
         }
         return date;
