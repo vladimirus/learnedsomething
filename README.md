@@ -19,7 +19,7 @@ Prerequisites:
 Install:
 
     mvn clean install
-    cp target/r*.war into your Tomcat's webapps directory
+    cp target/*.war into your Tomcat's webapps directory
     start your tomcat
 
 ### To run the tests:
