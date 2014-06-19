@@ -1,6 +1,7 @@
 package com.learnedsomething.dao.impl;
 
 import static com.learnedsomething.model.DomainFactory.aLink;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.times;
@@ -53,11 +54,30 @@ public class MongoDaoImplTest {
         links.add(aLink2);
 
         // when
-        dao.save(links);
+        dao.saveNew(links);
 
         // then
         verify(mongoOperation, times(1)).save(aLink1);
         verify(mongoOperation, times(1)).save(aLink2);
+    }
+
+    @Test
+    public void saveManyExisting() {
+        // given
+        Link aLink1 = aLink();
+        Link aLink2 = aLink();
+        List<Link> links = new ArrayList<Link>();
+        links.add(aLink1);
+        links.add(aLink2);
+        given(mongoOperation.findById(aLink1.getId(), Link.class)).willReturn(aLink1);
+
+
+        // when
+        dao.saveNew(links);
+
+        // then
+        verify(mongoOperation, times(0)).save(aLink1);
+        verify(mongoOperation, times(0)).save(aLink2);
     }
 
     @Test

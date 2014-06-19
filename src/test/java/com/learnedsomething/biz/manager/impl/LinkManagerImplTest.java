@@ -105,7 +105,7 @@ public class LinkManagerImplTest {
         manager.save(links);
 
         // then
-        verify(mongoDao).save(links);
+        verify(mongoDao).saveNew(links);
     }
 
     @Test
@@ -117,7 +117,7 @@ public class LinkManagerImplTest {
         manager.save(links);
 
         // then
-        verify(mongoDao, never()).save(links);
+        verify(mongoDao, never()).saveNew(links);
     }
 
     @Test
@@ -129,7 +129,7 @@ public class LinkManagerImplTest {
         manager.save(links);
 
         // then
-        verify(mongoDao, never()).save(links);
+        verify(mongoDao, never()).saveNew(links);
     }
 
     @Test

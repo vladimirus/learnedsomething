@@ -27,9 +27,12 @@ public class MongoDaoImpl implements LinkExtendedDao {
     }
 
     @Override
-    public void save(List<Link> links) {
+    public void saveNew(List<Link> links) {
         for (Link link : links) {
-            save(link);
+            Link existing = findById(link.getId());
+            if (existing == null) {
+                save(link);
+            }
         }
     }
 

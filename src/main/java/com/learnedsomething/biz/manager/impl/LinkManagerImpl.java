@@ -60,7 +60,7 @@ public class LinkManagerImpl implements LinkManager {
             for (Link link : links) {
                 link.setId(generateId(link.getUri()));
             }
-            mongoDao.save(links);
+            mongoDao.saveNew(links);
         }
     }
 
