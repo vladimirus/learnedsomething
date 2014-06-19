@@ -1,6 +1,7 @@
 package com.learnedsomething.biz.manager.impl;
 
 import com.learnedsomething.biz.manager.Publisher;
+import com.learnedsomething.dao.browser.WebBrowser;
 import com.learnedsomething.dao.browser.WebBrowserPool;
 import com.learnedsomething.model.Link;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,10 @@ public class FacebookPublisher implements Publisher {
 
     @Override
     public void publish(Link link) {
+        WebBrowser browser = webBrowserPool.get();
+        if (browser != null) {
 
+        }
+        webBrowserPool.close(browser);
     }
 }
