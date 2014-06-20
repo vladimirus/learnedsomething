@@ -68,6 +68,7 @@ public class LinkManagerImplTest {
     public void save() {
         // given
         Link link = new Link();
+        link.setText("text");
         link.setUri("test");
 
         // when

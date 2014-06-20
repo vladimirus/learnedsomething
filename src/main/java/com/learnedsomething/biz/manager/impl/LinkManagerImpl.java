@@ -120,7 +120,8 @@ public class LinkManagerImpl implements LinkManager {
         link.setText(text);
     }
 
-    private String removePrefix(String prefix, String text) {
+    private String removePrefix(String prefix, String in) {
+        String text = in;
         if (text.toUpperCase().startsWith(prefix.toUpperCase())) {
             text = text.substring(prefix.length()).trim();
         }
