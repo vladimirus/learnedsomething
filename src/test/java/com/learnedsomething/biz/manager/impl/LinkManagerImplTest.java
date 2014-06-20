@@ -248,6 +248,48 @@ public class LinkManagerImplTest {
     }
 
     @Test
+    public void cleanseRemoveMinus() {
+        // given
+        Link link = aLink();
+        link.setText("TIL - That the oldest known name for the Island of Great Britain is Albion");
+        List<Link> links = Arrays.asList(link);
+
+        // when
+        manager.cleanse(links);
+
+        // then
+        assertEquals("The oldest known name for the Island of Great Britain is Albion", link.getText());
+    }
+
+    @Test
+    public void cleanseRemoveColon() {
+        // given
+        Link link = aLink();
+        link.setText("TIL: - That the oldest known name for the Island of Great Britain is Albion");
+        List<Link> links = Arrays.asList(link);
+
+        // when
+        manager.cleanse(links);
+
+        // then
+        assertEquals("The oldest known name for the Island of Great Britain is Albion", link.getText());
+    }
+
+    @Test
+    public void cleanseRemoveText() {
+        // given
+        Link link = aLink();
+        link.setText("Today I learned: That the oldest known name for the Island of Great Britain is Albion");
+        List<Link> links = Arrays.asList(link);
+
+        // when
+        manager.cleanse(links);
+
+        // then
+        assertEquals("The oldest known name for the Island of Great Britain is Albion", link.getText());
+    }
+
+    @Test
     public void cleanseNull() {
         // given
         Link link = aLink();

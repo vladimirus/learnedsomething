@@ -114,8 +114,15 @@ public class LinkManagerImpl implements LinkManager {
             link.setId(generateId(link.getUri()));
         }
 
-        String text = removePrefix("til", link.getText());
-        text = removePrefix("that", text);
+        String text = link.getText();
+
+        for (int i = 0; i < 10; i++) {   //need to run multiple times to make sure
+            text = removePrefix("til", text);
+            text = removePrefix("that", text);
+            text = removePrefix("-", text);
+            text = removePrefix(":", text);
+            text = removePrefix("today i learned", text);
+        }
 
         link.setText(text);
     }
