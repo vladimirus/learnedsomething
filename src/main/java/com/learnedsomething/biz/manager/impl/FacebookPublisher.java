@@ -63,7 +63,6 @@ public class FacebookPublisher implements Publisher {
         textarea.sendKeys(Keys.SPACE);
         Thread.sleep(4000);
 
-        WebElement postButton = driver.findElement(By.xpath("//button[contains(.,'Post')]"));
-        postButton.click();
+        textarea.submit();
     }
 }
