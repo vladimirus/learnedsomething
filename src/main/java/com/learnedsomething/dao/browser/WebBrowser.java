@@ -7,6 +7,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * WebBrowser contains webdriver.
@@ -24,14 +25,14 @@ public class WebBrowser {
      */
     public WebBrowser(WebDriver driver) throws Exception {
         if (driver == null) {
-            this.driver = getFirefoxDriver();
+            this.driver = firefoxDriver();
         } else {
             this.driver = driver;
         }
         this.available = true;
     }
 
-    private WebDriver getFirefoxDriver() throws Exception {
+    private WebDriver firefoxDriver() throws Exception {
         int domMaxChromeScriptRunTime = 4500;
         int domMaxScriptRunTime = 3500;
         DesiredCapabilities capabilities = DesiredCapabilities.firefox();
@@ -39,7 +40,11 @@ public class WebBrowser {
         firefoxProfile.setPreference("dom.max_chrome_script_run_time", domMaxChromeScriptRunTime);
         firefoxProfile.setPreference("dom.max_script_run_time", domMaxScriptRunTime);
         capabilities.setCapability(FirefoxDriver.PROFILE, firefoxProfile);
-        return new FirefoxDriver(capabilities);
+        WebDriver firefoxDriver = new FirefoxDriver(capabilities);
+        firefoxDriver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        firefoxDriver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+        firefoxDriver.manage().timeouts().setScriptTimeout(60, TimeUnit.SECONDS);
+        return firefoxDriver;
     }
 
     /**
