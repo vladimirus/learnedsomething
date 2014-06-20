@@ -6,6 +6,7 @@ import com.learnedsomething.biz.manager.SearchManager;
 import com.learnedsomething.biz.manager.task.ParallelTask;
 import com.learnedsomething.dao.LinkExtendedDao;
 import com.learnedsomething.model.Link;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.DigestUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +23,7 @@ import java.util.List;
  */
 @Service
 public class LinkManagerImpl implements LinkManager {
+    private static final transient Logger LOG = Logger.getLogger(LinkManagerImpl.class);
     @Autowired
     ThreadPoolTaskExecutor taskExecutor;
     @Autowired
@@ -39,7 +42,7 @@ public class LinkManagerImpl implements LinkManager {
     @Override
     public Link save(Link link) {
         if (link != null) {
-            link.setId(generateId(link.getUri()));
+            cleanse(link);
             mongoDao.save(link);
         }
         return link;
@@ -54,16 +57,12 @@ public class LinkManagerImpl implements LinkManager {
     @Override
     @Scheduled(cron = "0 */1 * * * ?")
     public void index() {
-        List<Link> links = redditManager.findNewLinks();
-        save(links);
+        save(cleanse(redditManager.findNewLinks()));
     }
 
     @Override
     public void save(List<Link> links) {
         if (!CollectionUtils.isEmpty(links)) {
-            for (Link link : links) {
-                link.setId(generateId(link.getUri()));
-            }
             mongoDao.saveNew(links);
         }
     }
@@ -94,6 +93,41 @@ public class LinkManagerImpl implements LinkManager {
     public void deleteAll() {
         mongoDao.deleteAll();
     }
+
+    List<Link> cleanse(List<Link> links) {
+        List<Link> newLinks = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(links)) {
+            for (Link link : links) {
+                try {
+                    cleanse(link);
+                    newLinks.add(link);
+                } catch (Exception ignore) {
+                    LOG.error("Something wrong while cleasing link", ignore);
+                }
+            }
+        }
+        return newLinks;
+    }
+
+    private void cleanse(Link link) {
+        if (link.getId() == null) {
+            link.setId(generateId(link.getUri()));
+        }
+
+        String text = removePrefix("til", link.getText());
+        text = removePrefix("that", text);
+
+        link.setText(text);
+    }
+
+    private String removePrefix(String prefix, String text) {
+        if (text.toUpperCase().startsWith(prefix.toUpperCase())) {
+            text = text.substring(prefix.length()).trim();
+        }
+        text = text.substring(0, 1).toUpperCase() + text.substring(1);
+        return text;
+    }
+
 
     private List<Link> getLinksToBroadcast() {
         return mongoDao.findToBroadcast();

@@ -21,6 +21,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -201,5 +202,61 @@ public class LinkManagerImplTest {
 
         // then
         verify(mongoDao).deleteAll();
+    }
+
+    @Test
+    public void cleanseRemoveTil() {
+        // given
+        Link link = aLink();
+        link.setText("TIL the oldest known name for the Island of Great Britain is Albion");
+        List<Link> links = Arrays.asList(link);
+
+        // when
+        manager.cleanse(links);
+
+        // then
+        assertEquals("The oldest known name for the Island of Great Britain is Albion", link.getText());
+    }
+
+    @Test
+    public void cleanseRemoveThat() {
+        // given
+        Link link = aLink();
+        link.setText("That the oldest known name for the Island of Great Britain is Albion");
+        List<Link> links = Arrays.asList(link);
+
+        // when
+        manager.cleanse(links);
+
+        // then
+        assertEquals("The oldest known name for the Island of Great Britain is Albion", link.getText());
+    }
+
+    @Test
+    public void cleanseRemoveTilThat() {
+        // given
+        Link link = aLink();
+        link.setText("TIL that the oldest known name for the Island of Great Britain is Albion");
+        List<Link> links = Arrays.asList(link);
+
+        // when
+        manager.cleanse(links);
+
+        // then
+        assertEquals("The oldest known name for the Island of Great Britain is Albion", link.getText());
+    }
+
+    @Test
+    public void cleanseNull() {
+        // given
+        Link link = aLink();
+        link.setText(null);
+        List<Link> links = Arrays.asList(link, aLink());
+
+        // when
+        List<Link> actual = manager.cleanse(links);
+
+        // then
+        assertEquals(1, actual.size());
     }
 }
