@@ -8,6 +8,7 @@ import com.learnedsomething.dao.LinkExtendedDao;
 import com.learnedsomething.model.Link;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -51,7 +52,7 @@ public class LinkManagerImpl implements LinkManager {
     }
 
     @Override
-//    @Scheduled(cron = "0 */1 * * * ?") TODO
+    @Scheduled(cron = "0 */1 * * * ?")
     public void index() {
         List<Link> links = redditManager.findNewLinks();
         save(links);
@@ -79,7 +80,7 @@ public class LinkManagerImpl implements LinkManager {
     }
 
     @Override
-//    @Scheduled(cron = "0 */1 * * * ?") TODO
+    @Scheduled(cron = "0 */1 * * * ?")
     public void broadcast() {
         List<Link> links = getLinksToBroadcast();
         for (Link link : links) {
