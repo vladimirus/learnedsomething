@@ -19,7 +19,7 @@ public class RedditManagerImpl implements SearchManager {
     SearchDao searchDao;
 
     public List<Link> findNewLinks() {
-        SearchQuery query = new SearchQuery("http://www.reddit.com/r/todayilearned/top/");
+        SearchQuery query = new SearchQuery("http://www.reddit.com/r/todayilearned/top/?sort=top&t=week");
         return findNewLinks(query);
     }
 
