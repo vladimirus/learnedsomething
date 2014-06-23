@@ -127,9 +127,8 @@ public class LinkManagerImpl implements LinkManager {
             text = removePrefix("-", text);
             text = removePrefix(":", text);
             text = removePrefix("today i learned", text);
+            text = removeLastDot(text);
         }
-
-        text = removeLastDot(text);
 
         link.setText(text);
     }
