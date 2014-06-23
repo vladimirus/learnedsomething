@@ -129,7 +129,17 @@ public class LinkManagerImpl implements LinkManager {
             text = removePrefix("today i learned", text);
         }
 
+        text = removeLastDot(text);
+
         link.setText(text);
+    }
+
+    private String removeLastDot(String text) {
+        String result = text;
+        if (result.endsWith(".")) {
+            result = result.replaceAll("\\.(?!.*\\.)", "");
+        }
+        return result;
     }
 
     private String removePrefix(String prefix, String in) {

@@ -318,4 +318,18 @@ public class LinkManagerImplTest {
         // then
         assertEquals(1, actual.size());
     }
+
+    @Test
+    public void cleanseRemoveLastDot() {
+        // given
+        Link link = aLink();
+        link.setText("The oldest known name for the Island. of Great Britain is Albion...");
+        List<Link> links = Arrays.asList(link);
+
+        // when
+        manager.cleanse(links);
+
+        // then
+        assertEquals("The oldest known name for the Island. of Great Britain is Albion", link.getText());
+    }
 }
