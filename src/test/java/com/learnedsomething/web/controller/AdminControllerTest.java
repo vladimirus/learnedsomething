@@ -45,6 +45,16 @@ public class AdminControllerTest {
     }
 
     @Test
+    public void broadcastQueue() {
+
+        // when
+        controller.broadcastQueue();
+
+        // then
+        verify(linkManager).getLinksToBroadcast();
+    }
+
+    @Test
     public void delete() {
 
         // when

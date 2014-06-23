@@ -109,6 +109,11 @@ public class LinkManagerImpl implements LinkManager {
         return newLinks;
     }
 
+    @Override
+    public List<Link> getLinksToBroadcast() {
+        return mongoDao.findToBroadcast();
+    }
+
     private void cleanse(Link link) {
         if (link.getId() == null) {
             link.setId(generateId(link.getUri()));
@@ -134,11 +139,6 @@ public class LinkManagerImpl implements LinkManager {
         }
         text = text.substring(0, 1).toUpperCase() + text.substring(1);
         return text;
-    }
-
-
-    private List<Link> getLinksToBroadcast() {
-        return mongoDao.findToBroadcast();
     }
 
     private String generateId(String uri) {

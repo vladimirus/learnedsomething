@@ -31,5 +31,7 @@ public interface LinkManager {
 
     void broadcast();
 
+    List<Link> getLinksToBroadcast();
+
     void deleteAll();
 }

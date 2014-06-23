@@ -177,6 +177,22 @@ public class LinkManagerImplTest {
     }
 
     @Test
+    public void linksToBroadcast() {
+        // given
+        List<Link> links = new ArrayList<>();
+        links.add(aLink());
+        links.add(aLink());
+        given(mongoDao.findToBroadcast()).willReturn(links);
+
+        // when
+        List<Link> actual = manager.getLinksToBroadcast();
+
+        // then
+        assertEquals(actual, links);
+        verify(mongoDao).findToBroadcast();
+    }
+
+    @Test
     public void broadcast() {
         // given
         List<Link> links = new ArrayList<>();
