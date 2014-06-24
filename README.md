@@ -18,8 +18,7 @@ Prerequisites:
 
 Install:
 
-    Define the follow in your Tomcat script:
-    -Denvfile="file:/var/server/environment.properties"
+    Modify the environment properties file in /main/resources/
 
     mvn clean install
     cp target/*.war into your Tomcat's webapps directory
