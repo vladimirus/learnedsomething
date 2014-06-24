@@ -47,4 +47,14 @@ public class Link {
     public void setBroadcasted(boolean broadcasted) {
         this.broadcasted = broadcasted;
     }
+
+    @Override
+    public String toString() {
+        return "Link{" +
+                "id='" + id + '\'' +
+                ", uri='" + uri + '\'' +
+                ", text='" + text + '\'' +
+                ", broadcasted=" + broadcasted +
+                '}';
+    }
 }
