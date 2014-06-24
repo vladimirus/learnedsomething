@@ -41,9 +41,9 @@ public class WebBrowser {
         firefoxProfile.setPreference("dom.max_script_run_time", domMaxScriptRunTime);
         capabilities.setCapability(FirefoxDriver.PROFILE, firefoxProfile);
         WebDriver firefoxDriver = new FirefoxDriver(capabilities);
-        firefoxDriver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-        firefoxDriver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
-        firefoxDriver.manage().timeouts().setScriptTimeout(60, TimeUnit.SECONDS);
+        firefoxDriver.manage().timeouts().implicitlyWait(180, TimeUnit.SECONDS);
+        firefoxDriver.manage().timeouts().pageLoadTimeout(180, TimeUnit.SECONDS);
+        firefoxDriver.manage().timeouts().setScriptTimeout(180, TimeUnit.SECONDS);
         return firefoxDriver;
     }
 
