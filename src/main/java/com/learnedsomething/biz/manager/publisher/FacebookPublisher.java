@@ -41,7 +41,6 @@ public class FacebookPublisher implements Publisher {
         textarea.sendKeys(link.getUri());
         textarea.sendKeys(Keys.SPACE);
         Thread.sleep(4000);
-
         textarea.submit();
     }
 }
