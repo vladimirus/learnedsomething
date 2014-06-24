@@ -18,6 +18,9 @@ Prerequisites:
 
 Install:
 
+    Define the follow in your Tomcat script:
+    -Denvfile="file:/var/server/environment.properties"
+
     mvn clean install
     cp target/*.war into your Tomcat's webapps directory
     start your tomcat

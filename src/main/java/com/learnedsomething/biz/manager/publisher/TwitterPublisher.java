@@ -5,11 +5,16 @@ import com.learnedsomething.model.Link;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * Created by vladimir.
  */
 public class TwitterPublisher implements Publisher {
+    @Value("${ls.twitter.email}")
+    String email;
+    @Value("${ls.twitter.pass}")
+    String password;
 
     public void publish(Link link, WebBrowser browser) throws Exception {
         if (link.getText().length() < 140) {
@@ -20,10 +25,10 @@ public class TwitterPublisher implements Publisher {
 
     private void login(WebDriver driver) {
         driver.get("https://twitter.com/");
-        driver.findElement(By.id("signin-email")).sendKeys(System.getProperty("ls.twitter.email"));
-        WebElement password = driver.findElement(By.id("signin-password"));
-        password.sendKeys(System.getProperty("ls.twitter.pass"));
-        password.submit();
+        driver.findElement(By.id("signin-email")).sendKeys(email);
+        WebElement passwordInput = driver.findElement(By.id("signin-password"));
+        passwordInput.sendKeys(password);
+        passwordInput.submit();
     }
 
     private void postLink(WebDriver driver, Link link) {

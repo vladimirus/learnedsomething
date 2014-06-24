@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,6 +14,10 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class FacebookPublisher implements Publisher {
+    @Value("${ls.facebook.email}")
+    String email;
+    @Value("${ls.facebook.pass}")
+    String password;
 
     @Override
     public void publish(Link link, WebBrowser browser) throws Exception {
@@ -23,8 +28,8 @@ public class FacebookPublisher implements Publisher {
 
     private void login(WebDriver driver) {
         driver.get("https://www.facebook.com/");
-        driver.findElement(By.id("email")).sendKeys(System.getProperty("ls.email"));
-        driver.findElement(By.id("pass")).sendKeys(System.getProperty("ls.pass"));
+        driver.findElement(By.id("email")).sendKeys(email);
+        driver.findElement(By.id("pass")).sendKeys(password);
         driver.findElement(By.id("loginbutton")).click();
     }
 

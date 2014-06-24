@@ -26,8 +26,8 @@ public class FacebookPublisherTest {
     @Test
     public void realTest() throws Exception {
         // given
-        System.setProperty("ls.email", "");
-        System.setProperty("ls.pass", "");
+        facebookPublisher.email = "";
+        facebookPublisher.password = "";
         Link link = aLink();
         link.setText("Something else here..." + System.currentTimeMillis());
         link.setUri("http://www.google.com/");

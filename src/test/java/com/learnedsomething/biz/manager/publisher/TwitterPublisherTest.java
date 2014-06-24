@@ -79,8 +79,8 @@ public class TwitterPublisherTest {
     @Test
     public void realTest() throws Exception {
         // given
-        System.setProperty("ls.twitter.email", "");
-        System.setProperty("ls.twitter.pass", "");
+        twitterPublisher.email = "";
+        twitterPublisher.password = "";
         Link link = aLink();
         link.setText("Something else here..." + System.currentTimeMillis());
         link.setUri("http://www.google.com/");
@@ -88,6 +88,5 @@ public class TwitterPublisherTest {
 
         // when
         twitterPublisher.publish(link, browser);
-
     }
 }
