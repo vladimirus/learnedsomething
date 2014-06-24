@@ -50,11 +50,11 @@ public class Link {
 
     @Override
     public String toString() {
-        return "Link{" +
-                "id='" + id + '\'' +
-                ", uri='" + uri + '\'' +
-                ", text='" + text + '\'' +
-                ", broadcasted=" + broadcasted +
-                '}';
+        return "Link{"
+                + "id='" + id + '\''
+                + ", uri='" + uri + '\''
+                + ", text='" + text + '\''
+                + ", broadcasted=" + broadcasted
+                + '}';
     }
 }
