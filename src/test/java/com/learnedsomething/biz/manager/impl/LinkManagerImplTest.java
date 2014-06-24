@@ -9,8 +9,8 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import com.learnedsomething.biz.manager.Publisher;
 import com.learnedsomething.biz.manager.SearchManager;
+import com.learnedsomething.biz.manager.publisher.Publishable;
 import com.learnedsomething.dao.LinkExtendedDao;
 import com.learnedsomething.model.Link;
 import org.junit.Before;
@@ -37,7 +37,7 @@ public class LinkManagerImplTest {
     @Mock
     private SearchManager redditManager;
     @Mock
-    private Publisher publisher;
+    private Publishable publisher;
 
     @Before
     public void before() {
@@ -45,7 +45,7 @@ public class LinkManagerImplTest {
         this.manager.mongoDao = mongoDao;
         this.manager.taskExecutor = taskExecutor;
         this.manager.redditManager = redditManager;
-        this.manager.publisher = publisher;
+        this.manager.publishable = publisher;
     }
 
     @Test

@@ -1,8 +1,8 @@
 package com.learnedsomething.biz.manager.impl;
 
 import com.learnedsomething.biz.manager.LinkManager;
-import com.learnedsomething.biz.manager.Publisher;
 import com.learnedsomething.biz.manager.SearchManager;
+import com.learnedsomething.biz.manager.publisher.Publishable;
 import com.learnedsomething.biz.manager.task.ParallelTask;
 import com.learnedsomething.dao.LinkExtendedDao;
 import com.learnedsomething.model.Link;
@@ -32,7 +32,7 @@ public class LinkManagerImpl implements LinkManager {
     @Autowired
     SearchManager redditManager;
     @Autowired
-    Publisher publisher;
+    Publishable publishable;
 
     @Override
     public List<Link> findAll() {
@@ -85,7 +85,7 @@ public class LinkManagerImpl implements LinkManager {
         for (Link link : links) {
             link.setBroadcasted(true);
             mongoDao.save(link);
-            publisher.publish(link);
+            publishable.publish(link);
         }
     }
 
