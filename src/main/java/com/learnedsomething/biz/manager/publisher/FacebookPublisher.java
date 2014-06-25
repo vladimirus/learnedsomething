@@ -29,8 +29,6 @@ public class FacebookPublisher implements Publisher {
     }
 
     private void login(WebDriver driver) {
-        LOG.info("############### facebook email = " + email); //debug, delete
-
         driver.get("https://www.facebook.com/");
         driver.findElement(By.id("email")).sendKeys(email);
         driver.findElement(By.id("pass")).sendKeys(password);
