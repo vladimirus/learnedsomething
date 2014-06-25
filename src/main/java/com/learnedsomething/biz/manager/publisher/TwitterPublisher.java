@@ -18,6 +18,7 @@ public class TwitterPublisher implements Publisher {
     @Value("${ls.twitter.pass}")
     String password;
 
+    @Override
     public void publish(Link link, WebBrowser browser) throws Exception {
         if (link.getText().length() < 140) {
             login(browser.getDriver());

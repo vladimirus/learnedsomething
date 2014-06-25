@@ -26,6 +26,7 @@ public class PublisherFactory implements Publishable {
         if (browser != null) {
             for (Publisher publisher : publishers) {
                 try {
+                    LOG.debug("Publishing to " + publisher.getClass());
                     publisher.publish(link, browser);
                 } catch (Exception e) {
                     LOG.error(publisher.getClass() + " cannot publish link: " + link.toString());
