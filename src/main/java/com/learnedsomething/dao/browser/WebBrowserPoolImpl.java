@@ -117,6 +117,8 @@ public class WebBrowserPoolImpl implements WebBrowserPool {
             isExpired = true;
         } else if (browser.getDriver() == null) {
             isExpired = true;
+        } else if (browser.getDriver().toString().contains("(null)")) {
+            isExpired = true;
         }
 
         return isExpired;
