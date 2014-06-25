@@ -2,6 +2,7 @@ package com.learnedsomething.biz.manager.publisher;
 
 import com.learnedsomething.dao.browser.WebBrowser;
 import com.learnedsomething.model.Link;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class FacebookPublisher implements Publisher {
+    private static final transient Logger LOG = Logger.getLogger(FacebookPublisher.class);
     @Value("${ls.facebook.email}")
     String email;
     @Value("${ls.facebook.pass}")
@@ -27,6 +29,8 @@ public class FacebookPublisher implements Publisher {
     }
 
     private void login(WebDriver driver) {
+        LOG.info("############### facebook email = " + email); //debug, delete
+
         driver.get("https://www.facebook.com/");
         driver.findElement(By.id("email")).sendKeys(email);
         driver.findElement(By.id("pass")).sendKeys(password);

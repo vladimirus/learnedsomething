@@ -12,8 +12,10 @@
 
     <context:property-placeholder location="${envfile}" ignore-resource-not-found="true" ignore-unresolvable="true"
                                   order="1"/>
+    <!--
     <context:property-placeholder location="classpath*:environment.properties" ignore-resource-not-found="true"
                                   ignore-unresolvable="true" order="2"/>
+    -->
 
     <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
         <property name="corePoolSize" value="5"/>
