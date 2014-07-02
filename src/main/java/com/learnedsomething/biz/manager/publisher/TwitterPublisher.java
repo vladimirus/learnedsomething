@@ -41,5 +41,6 @@ public class TwitterPublisher implements Publisher {
 
         Thread.sleep(2000);
         driver.findElement(By.className("tweet-action")).click();
+        Thread.sleep(3000);
     }
 }
