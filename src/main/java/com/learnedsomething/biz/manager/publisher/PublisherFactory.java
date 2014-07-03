@@ -33,7 +33,7 @@ public class PublisherFactory implements Publishable {
                     LOG.error("Can't publish", e);
                 }
             }
-            webBrowserPool.close(browser);
+            webBrowserPool.release(browser);
         }
     }
 }
