@@ -2,6 +2,7 @@ package com.learnedsomething.biz.manager.publisher;
 
 import static com.learnedsomething.model.DomainFactory.aLink;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import com.learnedsomething.dao.browser.WebBrowser;
@@ -28,11 +29,15 @@ public class PublisherFactoryTest extends TestCase {
     @Mock
     private List<Publisher> publishers;
 
+    @Mock
+    private Publisher publisher;
+
     @Before
     public void before() {
         this.publisherFactory = new PublisherFactory();
         this.publisherFactory.publishers = publishers;
         this.publisherFactory.webBrowserPool = webBrowserPool;
+        this.publisherFactory.sleepAfterEachPublishMillis = 0L;
     }
 
     @Test
@@ -41,15 +46,16 @@ public class PublisherFactoryTest extends TestCase {
         Link link = aLink();
         given(webBrowserPool.get()).willReturn(webBrowser);
         Iterator iterator = Mockito.mock(Iterator.class);
-        given(iterator.hasNext()).willReturn(false);
         given(publishers.iterator()).willReturn(iterator);
+        given(iterator.hasNext()).willReturn(true, false);
+        given(iterator.next()).willReturn(publisher);
 
         // when
         publisherFactory.publish(link);
 
         // then
-        verify(iterator).hasNext();
+        verify(iterator, times(2)).hasNext();
         verify(webBrowserPool).get();
-        verify(webBrowserPool).release(webBrowser);
+        verify(webBrowserPool).close(webBrowser);
     }
 }

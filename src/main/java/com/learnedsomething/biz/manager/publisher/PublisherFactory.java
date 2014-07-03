@@ -15,6 +15,7 @@ import java.util.List;
 @Service
 public class PublisherFactory implements Publishable {
     private static final transient Logger LOG = Logger.getLogger(PublisherFactory.class);
+    Long sleepAfterEachPublishMillis = 30000L; //30 seconds
     @Autowired
     WebBrowserPool webBrowserPool;
     @Autowired
@@ -22,18 +23,25 @@ public class PublisherFactory implements Publishable {
 
     @Override
     public void publish(Link link) {
-        WebBrowser browser = webBrowserPool.get();
-        if (browser != null) {
-            for (Publisher publisher : publishers) {
-                try {
-                    LOG.debug("Publishing to " + publisher.getClass());
-                    publisher.publish(link, browser);
-                } catch (Exception e) {
-                    LOG.error(publisher.getClass() + " cannot publish link: " + link.toString());
-                    LOG.error("Can't publish", e);
-                }
+        for (Publisher publisher : publishers) {
+            WebBrowser browser = webBrowserPool.get();
+            if (browser != null) {
+                publish(link, browser, publisher);
+                webBrowserPool.close(browser);
             }
-            webBrowserPool.release(browser);
+        }
+    }
+
+    private void publish(Link link, WebBrowser browser, Publisher publisher) {
+        try {
+            LOG.debug("Publishing to " + publisher.getClass());
+            publisher.publish(link, browser);
+            if (sleepAfterEachPublishMillis > 0) {
+                Thread.sleep(sleepAfterEachPublishMillis);
+            }
+        } catch (Exception e) {
+            LOG.error(publisher.getClass() + " cannot publish link: " + link.toString());
+            LOG.error("Can't publish", e);
         }
     }
 }
