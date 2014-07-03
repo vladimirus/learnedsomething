@@ -8,12 +8,11 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 
 /**
  * Created by vladimir.
  */
-@Service
+//@Service
 public class FacebookPublisher implements Publisher {
     private static final transient Logger LOG = Logger.getLogger(FacebookPublisher.class);
     @Value("${ls.facebook.email}")

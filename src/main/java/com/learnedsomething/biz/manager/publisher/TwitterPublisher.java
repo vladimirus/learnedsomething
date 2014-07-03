@@ -38,9 +38,6 @@ public class TwitterPublisher implements Publisher {
         WebElement textarea = driver.findElement(By.id("tweet-box-mini-home-profile"));
         textarea.click();
         textarea.sendKeys(link.getText());
-
-        Thread.sleep(2000);
         driver.findElement(By.className("tweet-action")).click();
-        Thread.sleep(3000);
     }
 }
