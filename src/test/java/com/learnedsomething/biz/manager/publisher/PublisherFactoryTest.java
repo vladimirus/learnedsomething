@@ -50,6 +50,6 @@ public class PublisherFactoryTest extends TestCase {
         // then
         verify(iterator).hasNext();
         verify(webBrowserPool).get();
-        verify(webBrowserPool).close(webBrowser);
+        verify(webBrowserPool).release(webBrowser);
     }
 }
