@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
-import java.text.SimpleDateFormat;
-
 /**
  * This class actually connects to reddit and parses its response.
  */
@@ -21,7 +19,6 @@ public class RedditDaoImpl implements SearchDao {
     private static final transient Logger LOG = Logger.getLogger(RedditDaoImpl.class);
     @Autowired
     WebBrowserPool webBrowserPool;
-    private SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
 
     public SearchResult search(SearchQuery query) {
         SearchResult searchResult = new SearchResult();
