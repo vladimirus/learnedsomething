@@ -55,7 +55,7 @@ public class RedditParser {
         WebElement rawRank = rawLink.findElement(By.className("rank"));
         String rank = rawRank.getText();
 
-        if (hasText(rank)) {
+        if (!hasText(rank)) {
             rank = (String) ((JavascriptExecutor) driver).executeScript("return arguments[0].innerHTML", rawRank);
         }
 
