@@ -295,7 +295,7 @@ public class LinkManagerImplTest {
     public void cleanseRemoveText() {
         // given
         Link link = aLink();
-        link.setText("Today I learned: That of the oldest known name for the Island of Great Britain is Albion");
+        link.setText("Today I learned:, That of the oldest known name for the Island of Great Britain is Albion");
         List<Link> links = Arrays.asList(link);
 
         // when
