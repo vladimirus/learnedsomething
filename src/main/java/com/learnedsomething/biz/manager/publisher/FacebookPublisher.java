@@ -36,8 +36,8 @@ public class FacebookPublisher implements Publisher {
         driver.get("https://www.facebook.com/");
         driver.findElement(By.id("email")).sendKeys(email);
         driver.findElement(By.id("pass")).sendKeys(password);
-        sleepUninterruptibly(4, SECONDS);
         driver.findElement(By.id("pass")).sendKeys(RETURN);
+        sleepUninterruptibly(4, SECONDS);
     }
 
     private void openPage(WebDriver driver) {
