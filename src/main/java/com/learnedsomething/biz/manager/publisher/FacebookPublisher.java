@@ -1,10 +1,12 @@
 package com.learnedsomething.biz.manager.publisher;
 
+import static org.openqa.selenium.Keys.RETURN;
+import static org.openqa.selenium.Keys.SPACE;
+
 import com.learnedsomething.dao.browser.WebBrowser;
 import com.learnedsomething.model.Link;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +34,8 @@ public class FacebookPublisher implements Publisher {
         driver.get("https://www.facebook.com/");
         driver.findElement(By.id("email")).sendKeys(email);
         driver.findElement(By.id("pass")).sendKeys(password);
-        driver.findElement(By.id("loginbutton")).click();
+        driver.findElement(By.id("pass")).sendKeys(RETURN);
+//        driver.findElement(By.id("loginbutton")).click();
     }
 
     private void openPage(WebDriver driver) {
@@ -43,10 +46,10 @@ public class FacebookPublisher implements Publisher {
         WebElement textarea = driver.findElement(By.xpath("//textarea[contains(.,'What have you been up to?')]"));
         textarea.click();
         textarea.sendKeys(link.getText());
-        textarea.sendKeys(Keys.RETURN);
-        textarea.sendKeys(Keys.RETURN);
+        textarea.sendKeys(RETURN);
+        textarea.sendKeys(RETURN);
         textarea.sendKeys(link.getUri());
-        textarea.sendKeys(Keys.SPACE);
+        textarea.sendKeys(SPACE);
         Thread.sleep(4000);
         textarea.submit();
     }
