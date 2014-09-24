@@ -7,5 +7,5 @@ import com.learnedsomething.model.Link;
  * Publisher.
  */
 public interface Publisher {
-    void publish(Link link, WebBrowser browser) throws Exception;
+    void publish(Link link, WebBrowser browser);
 }

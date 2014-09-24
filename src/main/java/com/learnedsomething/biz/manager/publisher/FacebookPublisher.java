@@ -1,5 +1,7 @@
 package com.learnedsomething.biz.manager.publisher;
 
+import static com.google.common.util.concurrent.Uninterruptibles.sleepUninterruptibly;
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.openqa.selenium.Keys.RETURN;
 import static org.openqa.selenium.Keys.SPACE;
 
@@ -24,7 +26,7 @@ public class FacebookPublisher implements Publisher {
     String password;
 
     @Override
-    public void publish(Link link, WebBrowser browser) throws Exception {
+    public void publish(Link link, WebBrowser browser) {
         login(browser.getDriver());
         openPage(browser.getDriver());
         postLink(browser.getDriver(), link);
@@ -34,15 +36,15 @@ public class FacebookPublisher implements Publisher {
         driver.get("https://www.facebook.com/");
         driver.findElement(By.id("email")).sendKeys(email);
         driver.findElement(By.id("pass")).sendKeys(password);
+        sleepUninterruptibly(4, SECONDS);
         driver.findElement(By.id("pass")).sendKeys(RETURN);
-//        driver.findElement(By.id("loginbutton")).click();
     }
 
     private void openPage(WebDriver driver) {
         driver.get("https://www.facebook.com/learnedsomething?focus_composer=true&ref_type=bookmark");
     }
 
-    private void postLink(WebDriver driver, Link link) throws Exception {
+    private void postLink(WebDriver driver, Link link) {
         WebElement textarea = driver.findElement(By.xpath("//textarea[contains(.,'What have you been up to?')]"));
         textarea.click();
         textarea.sendKeys(link.getText());
@@ -50,7 +52,7 @@ public class FacebookPublisher implements Publisher {
         textarea.sendKeys(RETURN);
         textarea.sendKeys(link.getUri());
         textarea.sendKeys(SPACE);
-        Thread.sleep(4000);
+        sleepUninterruptibly(4, SECONDS);
         textarea.submit();
     }
 }

@@ -19,7 +19,7 @@ public class TwitterPublisher implements Publisher {
     String password;
 
     @Override
-    public void publish(Link link, WebBrowser browser) throws Exception {
+    public void publish(Link link, WebBrowser browser) {
         if (link.getText().length() < 140) {
             login(browser.getDriver());
             postLink(browser.getDriver(), link);
@@ -34,7 +34,7 @@ public class TwitterPublisher implements Publisher {
         passwordInput.submit();
     }
 
-    private void postLink(WebDriver driver, Link link) throws Exception {
+    private void postLink(WebDriver driver, Link link) {
         WebElement textarea = driver.findElement(By.id("tweet-box-mini-home-profile"));
         textarea.click();
         textarea.sendKeys(link.getText());
