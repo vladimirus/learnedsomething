@@ -3,6 +3,7 @@ package com.learnedsomething.dao.impl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.isA;
 import static org.mockito.Mockito.verify;
 
 import com.learnedsomething.dao.browser.WebBrowser;
@@ -13,7 +14,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -85,8 +85,8 @@ public class RedditDaoImplTest {
         SearchResult searchResult = new SearchResult();
         given(query.getSearchUri()).willReturn("test_uri");
         given(webBrowser.getDriver()).willReturn(driver);
-        given(driver.findElement(Mockito.isA(By.class))).willReturn(webElement);
-        given(webElement.findElements(Mockito.isA(By.class))).willReturn(null);
+        given(driver.findElement(isA(By.class))).willReturn(webElement);
+        given(webElement.findElements(isA(By.class))).willReturn(null);
 
         // when
         dao.doSearch(query, searchResult, webBrowser);
