@@ -1,5 +1,8 @@
 package com.learnedsomething.dao.impl;
 
+import static org.openqa.selenium.Keys.RETURN;
+
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,6 +14,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RedditAuthenticator {
+    private static final transient Logger LOG = Logger.getLogger(RedditAuthenticator.class);
+
     @Value("${ls.reddit.name}")
     String name;
     @Value("${ls.reddit.pass}")
@@ -28,6 +33,13 @@ public class RedditAuthenticator {
     }
 
     public void login(WebDriver driver) {
-
+        try {
+            driver.get("https://www.reddit.com/login");
+            driver.findElement(By.id("user_login")).sendKeys(name);
+            driver.findElement(By.id("passwd_login")).sendKeys(password);
+            driver.findElement(By.id("passwd_login")).sendKeys(RETURN);
+        } catch (Exception ignore) {
+            LOG.error(ignore);
+        }
     }
 }
