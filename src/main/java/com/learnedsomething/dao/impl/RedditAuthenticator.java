@@ -1,5 +1,7 @@
 package com.learnedsomething.dao.impl;
 
+import static com.google.common.util.concurrent.Uninterruptibles.sleepUninterruptibly;
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.openqa.selenium.Keys.RETURN;
 
 import org.apache.log4j.Logger;
@@ -38,6 +40,7 @@ public class RedditAuthenticator {
             driver.findElement(By.id("user_login")).sendKeys(name);
             driver.findElement(By.id("passwd_login")).sendKeys(password);
             driver.findElement(By.id("passwd_login")).sendKeys(RETURN);
+            sleepUninterruptibly(5, SECONDS);
         } catch (Exception ignore) {
             LOG.error(ignore);
         }

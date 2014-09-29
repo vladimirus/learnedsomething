@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.isA;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 import com.learnedsomething.dao.browser.WebBrowser;
@@ -32,11 +33,14 @@ public class RedditDaoImplTest {
     private WebDriver driver;
     @Mock
     private WebElement webElement;
+    @Mock
+    private RedditAuthenticator redditAuthenticator;
 
     @Before
     public void before() {
         this.dao = new RedditDaoImpl();
         this.dao.webBrowserPool = webBrowserPool;
+        this.dao.authenticator = redditAuthenticator;
     }
 
     @Test
@@ -83,13 +87,11 @@ public class RedditDaoImplTest {
     public void doSearchEmptyHtml() {
         // given
         SearchResult searchResult = new SearchResult();
-        given(query.getSearchUri()).willReturn("test_uri");
-        given(webBrowser.getDriver()).willReturn(driver);
         given(driver.findElement(isA(By.class))).willReturn(webElement);
         given(webElement.findElements(isA(By.class))).willReturn(null);
 
         // when
-        dao.doSearch(query, searchResult, webBrowser);
+        dao.doSearch("test_uri", searchResult, driver);
 
         // then
         verify(driver).get("test_uri");
@@ -99,13 +101,39 @@ public class RedditDaoImplTest {
     public void doSearchException() {
         // given
         SearchResult searchResult = new SearchResult();
-        given(query.getSearchUri()).willReturn("test_uri");
-        given(webBrowser.getDriver()).willReturn(null); //NullPointerException will be raised
 
         // when
-        dao.doSearch(query, searchResult, webBrowser);
+        dao.doSearch("test_uri", searchResult, null);
 
         // then
         // no exception
+    }
+
+    @Test
+    public void doSearchLogin() {
+        // given
+        SearchResult searchResult = new SearchResult();
+        given(redditAuthenticator.isLoggedIn(driver)).willReturn(false);
+        given(driver.findElement(isA(By.class))).willReturn(webElement);
+
+        // when
+        dao.doSearch("test_uri", searchResult, driver);
+
+        // then
+        verify(redditAuthenticator).login(driver);
+    }
+
+    @Test
+    public void doSearchDontLogin() {
+        // given
+        SearchResult searchResult = new SearchResult();
+        given(redditAuthenticator.isLoggedIn(driver)).willReturn(true);
+        given(driver.findElement(isA(By.class))).willReturn(webElement);
+
+        // when
+        dao.doSearch("test_uri", searchResult, driver);
+
+        // then
+        verify(redditAuthenticator, never()).login(driver);
     }
 }
