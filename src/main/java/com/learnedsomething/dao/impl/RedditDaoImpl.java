@@ -37,17 +37,18 @@ public class RedditDaoImpl implements SearchDao {
     void doSearch(String query, SearchResult searchResult, WebDriver driver) {
         try {
             driver.get(query);
-            loginIfNeeded(query, driver);
+            loginIfNeeded(driver);
             new RedditParser(driver, searchResult).parse(); //this should come from a factory... maybe later..
         } catch (Exception ignore) {
             LOG.error(ignore);
         }
     }
 
-    private void loginIfNeeded(String redirectUrl, WebDriver driver) {
+    private void loginIfNeeded(WebDriver driver) {
+        String currentUrl = driver.getCurrentUrl();
         if (!authenticator.isLoggedIn(driver)) {
             authenticator.login(driver);
-            driver.get(redirectUrl);
+            driver.get(currentUrl);
         }
     }
 }
