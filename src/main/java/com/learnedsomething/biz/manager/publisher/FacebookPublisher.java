@@ -46,7 +46,7 @@ public class FacebookPublisher implements Publisher {
 
     private void postLink(WebDriver driver, Link link) {
         WebElement textarea = driver.findElement(By.xpath("//textarea[contains(.,'What have you been up to?')]"));
-//        textarea.click();
+        textarea.click();
         textarea.sendKeys(link.getText());
         textarea.sendKeys(RETURN);
         textarea.sendKeys(RETURN);
