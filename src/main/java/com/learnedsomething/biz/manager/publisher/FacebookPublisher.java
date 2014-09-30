@@ -41,7 +41,7 @@ public class FacebookPublisher implements Publisher {
     }
 
     private void openPage(WebDriver driver) {
-        driver.get("https://www.facebook.com/learnedsomething?focus_composer=true&ref_type=bookmark");
+        driver.get("https://www.facebook.com/learnedsomething?ref_type=bookmark");
     }
 
     private void postLink(WebDriver driver, Link link) {
