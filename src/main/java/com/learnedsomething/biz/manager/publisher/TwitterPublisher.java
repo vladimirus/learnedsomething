@@ -1,5 +1,9 @@
 package com.learnedsomething.biz.manager.publisher;
 
+import static com.google.common.util.concurrent.Uninterruptibles.sleepUninterruptibly;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.openqa.selenium.Keys.RETURN;
+
 import com.learnedsomething.dao.browser.WebBrowser;
 import com.learnedsomething.model.Link;
 import org.openqa.selenium.By;
@@ -29,9 +33,9 @@ public class TwitterPublisher implements Publisher {
     private void login(WebDriver driver) {
         driver.get("https://twitter.com/");
         driver.findElement(By.id("signin-email")).sendKeys(email);
-        WebElement passwordInput = driver.findElement(By.id("signin-password"));
-        passwordInput.sendKeys(password);
-        passwordInput.submit();
+        driver.findElement(By.id("signin-password")).sendKeys(password);
+        driver.findElement(By.id("signin-password")).sendKeys(RETURN);
+        sleepUninterruptibly(4, SECONDS);
     }
 
     private void postLink(WebDriver driver, Link link) {
