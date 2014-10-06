@@ -1,5 +1,8 @@
 package com.learnedsomething.biz.manager.publisher;
 
+import static com.google.common.util.concurrent.Uninterruptibles.sleepUninterruptibly;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+
 import com.learnedsomething.dao.browser.WebBrowser;
 import com.learnedsomething.dao.browser.WebBrowserPool;
 import com.learnedsomething.model.Link;
@@ -37,7 +40,7 @@ public class PublisherFactory implements Publishable {
             LOG.debug("Publishing to " + publisher.getClass());
             publisher.publish(link, browser);
             if (sleepAfterEachPublishMillis > 0) {
-                Thread.sleep(sleepAfterEachPublishMillis);
+                sleepUninterruptibly(sleepAfterEachPublishMillis, MILLISECONDS);
             }
         } catch (Exception e) {
             LOG.error(publisher.getClass() + " cannot publish link: " + link.toString());
