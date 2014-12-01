@@ -1,10 +1,11 @@
 package com.learnedsomething.dao.browser;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import static org.openqa.selenium.remote.DesiredCapabilities.firefox;
 
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -33,18 +34,11 @@ public class WebBrowser {
     }
 
     private WebDriver firefoxDriver() throws Exception {
-        int domMaxChromeScriptRunTime = 4500;
-        int domMaxScriptRunTime = 3500;
-        DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-        FirefoxProfile firefoxProfile = new FirefoxProfile();
-        firefoxProfile.setPreference("dom.max_chrome_script_run_time", domMaxChromeScriptRunTime);
-        firefoxProfile.setPreference("dom.max_script_run_time", domMaxScriptRunTime);
-        capabilities.setCapability(FirefoxDriver.PROFILE, firefoxProfile);
-        WebDriver firefoxDriver = new FirefoxDriver(capabilities);
-        firefoxDriver.manage().timeouts().implicitlyWait(180, TimeUnit.SECONDS);
-        firefoxDriver.manage().timeouts().pageLoadTimeout(180, TimeUnit.SECONDS);
-        firefoxDriver.manage().timeouts().setScriptTimeout(180, TimeUnit.SECONDS);
-        return firefoxDriver;
+        WebDriver driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), firefox());
+        driver.manage().timeouts().implicitlyWait(180, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(180, TimeUnit.SECONDS);
+        driver.manage().timeouts().setScriptTimeout(180, TimeUnit.SECONDS);
+        return driver;
     }
 
     /**
