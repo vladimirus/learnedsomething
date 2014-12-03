@@ -13,7 +13,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.springframework.core.io.ClassPathResource;
 
@@ -59,7 +58,6 @@ public class RedditParserTest {
     @Test
     public void doSearchFromStaticFile02() {
         //given
-        driver = new FirefoxDriver(); //javascript only works in firefox (not html driver) for some reason...
         driver.get(file(("reddit-02.html")));
         RedditParser redditParser = new RedditParser(driver, searchResult);
 
