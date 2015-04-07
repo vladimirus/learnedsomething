@@ -1,11 +1,8 @@
 package com.learnedsomething.dao.browser;
 
-import static org.openqa.selenium.remote.DesiredCapabilities.firefox;
-
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -34,7 +31,7 @@ public class WebBrowser {
     }
 
     private WebDriver firefoxDriver() throws Exception {
-        WebDriver driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), firefox());
+        WebDriver driver = new FirefoxDriver();
         driver.manage().timeouts().implicitlyWait(180, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(180, TimeUnit.SECONDS);
         driver.manage().timeouts().setScriptTimeout(180, TimeUnit.SECONDS);
