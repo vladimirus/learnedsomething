@@ -2,14 +2,19 @@ package com.learnedsomething.biz.manager.publisher;
 
 import static com.google.common.util.concurrent.Uninterruptibles.sleepUninterruptibly;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static org.openqa.selenium.OutputType.FILE;
 
 import com.learnedsomething.dao.browser.WebBrowser;
 import com.learnedsomething.dao.browser.WebBrowserPool;
 import com.learnedsomething.model.Link;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.TakesScreenshot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -45,6 +50,12 @@ public class PublisherFactory implements Publishable {
         } catch (Exception e) {
             LOG.error(publisher.getClass() + " cannot publish link: " + link.toString());
             LOG.error("Can't publish", e);
+            try {
+                File error = ((TakesScreenshot) browser.getDriver()).getScreenshotAs(FILE);
+                FileUtils.copyFile(error, new File("/tmp/learnedsomething/" + publisher.getClass().getSimpleName() + ".png"));
+            } catch (IOException e1) {
+                LOG.error("Can't take screenshot", e);
+            }
         }
     }
 }
