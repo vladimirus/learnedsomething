@@ -39,7 +39,7 @@ public class TwitterPublisher implements Publisher {
     }
 
     private void postLink(WebDriver driver, Link link) {
-        WebElement textarea = driver.findElement(By.id("tweet-box-mini-home-profile"));
+        WebElement textarea = driver.findElement(By.id("tweet-box-home-timeline"));
         textarea.click();
         textarea.sendKeys(link.getText());
         driver.findElement(By.className("tweet-action")).click();
