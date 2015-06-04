@@ -38,10 +38,12 @@ public class TumblrPublisher implements Publisher {
     }
 
     private void postLink(WebDriver driver, Link link) {
-//        driver.switchTo().frame(driver.findElement(By.id("post_two_ifr")));
+        driver.findElement(By.cssSelector("button.post-settings")).click();
+        driver.findElement(By.id("sourceUrl_input")).sendKeys(link.getUri());
+
+        driver.findElement(By.cssSelector("div.editor.editor-plaintext")).click();
         driver.findElement(By.cssSelector("div.editor.editor-plaintext")).sendKeys(link.getText());
-        driver.findElement(By.cssSelector("div.editor.editor-richtext")).sendKeys(link.getUri());
-//        driver.switchTo().defaultContent();
+
         driver.findElement(By.className("create_post_button")).click();
     }
 }
